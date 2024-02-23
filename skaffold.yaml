@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*  # Caminho para os manifestos do Kubernetes para implantação
+build:
+  artifacts:
+    - image: jaooads/auth  # Nome da imagem a ser construída
+      context: auth  # Diretório de contexto para a construção do Docker
+      docker:
+        dockerfile: Dockerfile  # Dockerfile a ser utilizado para a construção da imagem
+
+      sync:
+        manual:
+          - src: 'src/**/*.ts'  # Arquivos TypeScript de origem para sincronização
+            dest: .  # Diretório de destino para os arquivos sincronizados
